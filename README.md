@@ -1,10 +1,10 @@
 # git-fork-sync
-Synchronize your git fork with upstream
+Synchronize your git fork with upstream (bulk-processing every branch)
 
 ## Outline
 
 main script is designed to pass-through CLI arguments to built-in functions for more flexibility.
-barring the last 3 lines it is suitable for includes 
+barring the last 3 lines it is suitable for includes
 
 ## Usage
 
