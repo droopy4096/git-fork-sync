@@ -1,6 +1,11 @@
 # git-fork-sync
 Synchronize your git fork with upstream
 
+## Outline
+
+main script is designed to pass-through CLI arguments to built-in functions for more flexibility.
+barring the last 3 lines it is suitable for includes 
+
 ## Usage
 
 Simple use (no PR branch generation):
