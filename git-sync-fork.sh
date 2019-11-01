@@ -9,6 +9,7 @@
 ORIGIN=${SYNC_ORIGIN:-"origin"}
 UPSTREAM=${SYNC_UPSTREAM:-"upstream"}
 PR_BRANCH_SUFFIX=${SYNC_PR_BRANCH_SUFFIX:-"-fix"}
+SAVED_BRANCHES=${SYNC_SAVED_BRANCHES:-"${UPSTREAM}-branches"}
 
 sync_branch(){
   branch_name=$1
@@ -21,6 +22,29 @@ sync_branch(){
   git checkout --track ${ORIGIN}/${branch_name} && \
   git rebase ${UPSTREAM}/${branch_name} && \
   ( [ -n "$SYNC_PR_BRANCH" -o "$SYNC_PR_BRANCH_SUFFIX" ] && git branch ${branch_name}${PR_BRANCH_SUFFIX}  )
+}
+
+list_branches(){
+  repo=${1}
+  git remote show ${repo} | awk 'BEGIN{track=0;}/Remote branches:/ {track=2;} /Local/ {track=0;} track {if(track>1) {track=1} else {print $1;}}'
+}
+
+save_upstream_branches(){
+  list_branches ${UPSTREAM} > ${SAVED_BRANCHES}
+}
+
+pop_branch(){
+  SAVED_BRANCHES_TMP=$(mktemp --tmpdir="." "${SAVED_BRANCHES}.XXXXX")
+  mv ${SAVED_BRANCHES} ${SAVED_BRANCHES_TMP}
+  CURRENT_BRANCH=$(head -n 1 ${SAVED_BRANCHES_TMP})
+  tail -n +2 ${SAVED_BRANCHES_TMP} > ${SAVED_BRANCHES}
+  rm ${SAVED_BRANCHES_TMP}
+  echo ${CURRENT_BRANCH}
+}
+
+sync_next(){
+  branch_name=$(pop_branch)
+  sync_branch ${branch_name}
 }
 
 cmd=$1
