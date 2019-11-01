@@ -10,6 +10,7 @@ ORIGIN=${SYNC_ORIGIN:-"origin"}
 UPSTREAM=${SYNC_UPSTREAM:-"upstream"}
 PR_BRANCH_SUFFIX=${SYNC_PR_BRANCH_SUFFIX:-"-fix"}
 SAVED_BRANCHES=${SYNC_SAVED_BRANCHES:-"${UPSTREAM}-branches"}
+SYNC_REBASE_OPTIONS=${SYNC_REBASE_OPTIONS:-""}
 
 sync_branch(){
   branch_name=$1
@@ -20,7 +21,7 @@ sync_branch(){
     PR_BRANCH=${branch_name}
   fi
   git checkout --track ${ORIGIN}/${branch_name} && \
-  git rebase ${UPSTREAM}/${branch_name} && \
+  git rebase ${SYNC_REBASE_OPTIONS} ${UPSTREAM}/${branch_name} && \
   ( [ -n "$SYNC_PR_BRANCH" -o "$SYNC_PR_BRANCH_SUFFIX" ] && git branch ${branch_name}${PR_BRANCH_SUFFIX}  )
 }
 
