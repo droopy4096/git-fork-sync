@@ -16,11 +16,11 @@ Simple use (no PR branch generation):
   export SYNC_ORIGIN=origin
   sh -x git-sync-fork.sh save_upstream_branches
   # edit ${SAVED_BRANCHES}
-  sh -x git-sync-fork.sh next_sync
+  sh -x git-sync-fork.sh sync_next
   # do whatever needs to be done before next sync
   # ...
   # git branches -v
-  sh -x git-sync-fork.sh next_sync
+  sh -x git-sync-fork.sh sync_next
 ```
 
 More complex use:
@@ -30,10 +30,10 @@ More complex use:
   export SYNC_PR_BRANCH_SUFFIX="-my-fix"
   sh -x git-sync-fork.sh save_upstream_branches
   # edit ${SAVED_BRANCHES}
-  sh -x git-sync-fork.sh next_sync
+  sh -x git-sync-fork.sh sync_next
   # do whatever needs to be done before next sync
   # ...
   # git branches -v
   # note that you have two branches checked out - original and <original>-my-fix
-  sh -x git-sync-fork.sh next_sync
+  sh -x git-sync-fork.sh sync_next
 ```
