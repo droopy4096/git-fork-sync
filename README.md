@@ -1,4 +1,4 @@
-# git-fork-sync
+# git-sync-fork
 Synchronize your git fork with upstream (bulk-processing every branch)
 
 ## Outline
