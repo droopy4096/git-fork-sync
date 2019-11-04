@@ -11,7 +11,9 @@ barring the last 3 lines it is suitable for includes
 Simple use (no PR branch generation):
 
 ```shell
-  export SAVED_BRANCHES=my_file
+  export SYNC_SAVED_BRANCHES=my_file
+  export SYNC_UPSTREAM=upstream
+  export SYNC_ORIGIN=origin
   sh -x git-sync-fork.sh save_upstream_branches
   # edit ${SAVED_BRANCHES}
   sh -x git-sync-fork.sh next_sync
@@ -24,8 +26,8 @@ Simple use (no PR branch generation):
 More complex use:
 
 ```shell
-  export SAVED_BRANCHES=my_file
-  export PR_BRANCH_SUFFIX="-my-fix"
+  export SYNC_SAVED_BRANCHES=my_file
+  export SYNC_PR_BRANCH_SUFFIX="-my-fix"
   sh -x git-sync-fork.sh save_upstream_branches
   # edit ${SAVED_BRANCHES}
   sh -x git-sync-fork.sh next_sync
