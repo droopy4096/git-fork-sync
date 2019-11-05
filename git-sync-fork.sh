@@ -23,7 +23,7 @@ sync_branch(){
 
   if git checkout --track ${ORIGIN}/${branch_name}
   then
-    echo ""
+    echo "Created new local branch ${ORIGIN}/${branch_name}"
   else
     if ( list_branches ${ORIGIN} | grep ${branch_name} )
     then
@@ -32,8 +32,30 @@ sync_branch(){
       git pull
     fi
   fi && \
-  git rebase ${SYNC_REBASE_OPTIONS} ${UPSTREAM}/${branch_name} && \
-  ( [ -n "$SYNC_PR_BRANCH" -o "$SYNC_PR_BRANCH_SUFFIX" ] && git branch ${branch_name}${PR_BRANCH_SUFFIX}  )
+  git rebase ${SYNC_REBASE_OPTIONS} ${UPSTREAM}/${branch_name}
+}
+
+create_pr(){
+  local_branch=$(git rev-parse --abbrev-ref HEAD)
+  branch_name=${1:-${local_branch}}
+  if [ -n "$SYNC_PR_BRANCH" -o -n "$SYNC_PR_BRANCH_SUFFIX" ]
+  then
+    if git branch ${branch_name}${PR_BRANCH_SUFFIX}
+    then
+      echo "Created new local branch ${branch_name}${PR_BRANCH_SUFFIX}"
+      git checkout ${branch_name}${PR_BRANCH_SUFFIX}
+    else
+      if git checkout ${branch_name}${PR_BRANCH_SUFFIX}
+      then
+        git rebase ${branch_name}
+      else
+        echo "Can't checkout ${branch_name}${PR_BRANCH_SUFFIX}"
+        exit 1
+      fi
+    fi
+  else
+    echo "Not configured for PR branch creation"
+  fi
 }
 
 list_branches(){
