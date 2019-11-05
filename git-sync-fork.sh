@@ -20,7 +20,18 @@ sync_branch(){
   else
     PR_BRANCH=${branch_name}
   fi
-  git checkout --track ${ORIGIN}/${branch_name} && \
+
+  if git checkout --track ${ORIGIN}/${branch_name}
+  then
+    echo ""
+  else
+    if ( list_branches ${ORIGIN} | grep ${branch_name} )
+    then
+      # we already have this branch... we're OK, lets just pull it
+      git checkout ${branch_name}
+      git pull
+    fi
+  fi && \
   git rebase ${SYNC_REBASE_OPTIONS} ${UPSTREAM}/${branch_name} && \
   ( [ -n "$SYNC_PR_BRANCH" -o "$SYNC_PR_BRANCH_SUFFIX" ] && git branch ${branch_name}${PR_BRANCH_SUFFIX}  )
 }
