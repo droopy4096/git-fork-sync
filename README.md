@@ -31,6 +31,7 @@ More complex use:
   sh -x git-sync-fork.sh save_upstream_branches
   # edit ${SAVED_BRANCHES}
   sh -x git-sync-fork.sh sync_next
+  sh -x git-sync-fork.sh create_pr
   # do whatever needs to be done before next sync
   # ...
   # git branches -v
