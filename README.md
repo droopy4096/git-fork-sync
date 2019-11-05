@@ -37,4 +37,5 @@ More complex use:
   # git branches -v
   # note that you have two branches checked out - original and <original>-my-fix
   sh -x git-sync-fork.sh sync_next
+  sh -x git-sync-fork.sh create_pr
 ```
