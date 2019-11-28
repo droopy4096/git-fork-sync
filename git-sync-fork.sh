@@ -64,6 +64,7 @@ list_branches(){
 }
 
 save_upstream_branches(){
+  git fetch ${UPSTREAM}
   list_branches ${UPSTREAM} > ${SAVED_BRANCHES}
 }
 
