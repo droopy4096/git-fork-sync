@@ -39,3 +39,13 @@ More complex use:
   sh -x git-sync-fork.sh sync_next
   sh -x git-sync-fork.sh create_pr
 ```
+
+Remove local branches that don't have corresponding remote branches:
+
+```shell
+SYNC_UPSTREAM=origin SYNC_SAVED_BRANCHES=branch_list.remote sh ~/work/git-sync-fork/git-sync-fork.sh save_upstream_branches
+git branch --list | cut -c3- > branch_list.local
+comm -23 <(sort branch_list.local) <(sort branch_list.remote) > branch_list.remove
+for b in $(cat branch_list.remove) ; do git branch -d ${b} ; done
+rm branch_list.{remote,local,remove}
+```
