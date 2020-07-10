@@ -8,7 +8,7 @@ barring the last 3 lines it is suitable for includes
 
 ## Usage
 
-###Simple use (no PR branch generation):
+### Simple use (no PR branch generation):
 
 ```shell
   export SYNC_SAVED_BRANCHES=my_file
@@ -23,7 +23,7 @@ barring the last 3 lines it is suitable for includes
   sh -x git-sync-fork.sh sync_next
 ```
 
-###More complex use:
+### More complex use:
 
 ```shell
   export SYNC_SAVED_BRANCHES=my_file
@@ -40,7 +40,7 @@ barring the last 3 lines it is suitable for includes
   sh -x git-sync-fork.sh create_pr
 ```
 
-###Remove local branches that don't have corresponding remote branches:
+### Remove local branches that don't have corresponding remote branches:
 
 ```shell
 SYNC_UPSTREAM=origin SYNC_SAVED_BRANCHES=branch_list.remote sh ~/work/git-sync-fork/git-sync-fork.sh save_upstream_branches
